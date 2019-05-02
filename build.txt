@@ -1,0 +1,5 @@
+ng build => compila o app no modo dev
+ng build --prod => compila o app para prod
+ng build --prod --bh=/url/ => define a pasta para onde o app ficara no servidor
+
+
