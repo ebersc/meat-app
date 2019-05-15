@@ -3,14 +3,17 @@ import {ShoppingCartService} from '../restaurant-detail/shopping-cart/shopping-c
 import {CartItem} from '../restaurant-detail/shopping-cart/cart-item.model';
 import {Order} from './order.model';
 import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import {MEAT_API} from '../app.api';
+import { LoginService } from '../security/login/login.service';
 
 
 @Injectable()
 export class OrderService {
-  constructor(private cartService: ShoppingCartService, private http: HttpClient) {
+  constructor(private cartService: ShoppingCartService,
+              private http: HttpClient,
+              private loginService: LoginService) {
   }
 
   cartItems(): CartItem[] {
@@ -38,7 +41,12 @@ export class OrderService {
   }
 
   checkOrder(order: Order): Observable<string> {
-    return this.http.post<Order>(`${MEAT_API}/orders`, order)
+
+    let headers = new HttpHeaders();
+    if(this.loginService.isLoggedIn()){
+      headers = headers.set('Authorization', `Bearer ${this.loginService.user.accessToken}`)
+    }
+    return this.http.post<Order>(`${MEAT_API}/orders`, order, {headers: headers})
       .map(order => order.id);
   }
 }

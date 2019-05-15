@@ -12,6 +12,7 @@ import {OrderService} from '../order/order.service';
 import {SnackbarComponent} from './messages/snackbar/snackbar.component';
 import {NotificationService} from './messages/notification.service';
 import {LoginService} from '../security/login/login.service';
+import { LoggedInGuard } from '../security/loggedin.guard';
 
 @NgModule({
   declarations: [InputComponent, RadioComponent, RatingComponent, SnackbarComponent],
@@ -27,7 +28,8 @@ export class SharedModule {
                   RestaurantsService,
                   OrderService,
                   NotificationService,
-                  LoginService]
+                  LoginService,
+                  LoggedInGuard]
     };
   }
 }
