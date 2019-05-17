@@ -1,8 +1,9 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, LOCALE_ID} from '@angular/core';
+import {NgModule, LOCALE_ID, ErrorHandler} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule, PreloadAllModules} from '@angular/router';
 
+import { ApplicationErrorHandler } from './app.error-handler';
 import {ROUTES} from './app.routes';
 
 import {AppComponent} from './app.component';
@@ -46,7 +47,8 @@ import { UserDetailComponent } from './header/user-detail/user-detail.component'
     SharedModule.forRoot(),
     RouterModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules}),
   ],
-  providers: [{provide: LOCALE_ID, useValue: 'pt-BR'}],
+  providers: [{provide: LOCALE_ID, useValue: 'pt-BR'},
+              {provide: ErrorHandler, useClass: ApplicationErrorHandler}],
   bootstrap: [AppComponent]
 })
 export class AppModule {
